@@ -1,26 +1,747 @@
-/* MAKE CANTACT LOOK GRATE show it into center */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+/* ============================================
+   Global Styles
+   ============================================ */
+
+* {
     margin: 0;
     padding: 0;
-    display: block;
-    justify-content: center;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --light-bg: #ecf0f1;
+    --dark-text: #2c3e50;
+    --light-text: #7f8c8d;
+    --border-color: #bdc3c7;
+    --success-color: #27ae60;
+}
+
+/* ============================================
+    transition: color 0.35s ease, border-color 0.35s ease;
+   ============================================ */
+
+html[data-theme="dark"] {
+    --primary-color: #e6eef6;
+    --secondary-color: #8e44ad;
+    --accent-color: #ff6b6b;
+    --light-bg: #1f2733;
+    --dark-text: #e6eef6;
+    --light-text: #b0bec5;
+    --border-color: #2b2f35;
+    --success-color: #2ecc71;
+}
+
+html[data-theme="dark"] body {
+    background: linear-gradient(135deg, #0f1724 0%, #1a2230 100%);
+}
+
+/* Ensure section headers update visibly in dark mode */
+html[data-theme="dark"] .section-title {
+    color: var(--primary-color);
+    border-bottom-color: var(--secondary-color);
+}
+
+/* Adjust general text colors and transitions in dark mode */
+html[data-theme="dark"] body,
+html[data-theme="dark"] .container,
+html[data-theme="dark"] .section,
+html[data-theme="dark"] p,
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] .info-item .value,
+html[data-theme="dark"] .company,
+html[data-theme="dark"] .institution,
+html[data-theme="dark"] .section-content {
+    color: var(--dark-text);
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Nav and footer tweaks for dark mode to keep contrast */
+html[data-theme="dark"] .nav-bar {
+    background: rgba(12, 18, 28, 0.6);
+}
+
+html[data-theme="dark"] .nav-link {
+    color: var(--light-text);
+}
+
+html[data-theme="dark"] .nav-link.active {
+    background: var(--secondary-color);
+    color: white;
+}
+
+html[data-theme="dark"] .footer {
+    background-color: rgba(10,12,16,0.9);
+    color: var(--light-text);
+}
+
+/* Make container and header use dark backgrounds so light text is visible */
+html[data-theme="dark"] .container {
+    background-color: #0f1620;
+}
+
+html[data-theme="dark"] .header {
+    background: linear-gradient(135deg, #0b1220 0%, #142032 100%);
+}
+
+/* Slightly adjust profile picture border for dark mode */
+html[data-theme="dark"] .profile-pic {
+    border-color: rgba(255,255,255,0.12);
+}
+/* theme toggle specific tweaks */
+.nav-link.theme-toggle {
+    display: inline-flex;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
+    padding: 6px 10px;
 }
-h1 {
-    color: #333;
+
+.theme-toggle i {
+    font-size: 1.05em;
 }
-ul {
-    list-style-type: none;
-    padding: 0;
+
+html {
+    scroll-behavior: smooth;
 }
-li {
-    background-color: #fff;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0;
 }
-/* End of style.css */
+
+/* ============================================
+   Container & Layout
+   ============================================ */
+
+.container {
+    max-width: 85%;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* ============================================
+   Header Section
+   ============================================ */
+
+.header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ============================================
+   Navigation Bar
+   ============================================ */
+
+.nav-bar {
+    position: sticky;
+    top: 18px;
+    z-index: 60;
+    display: flex;
+    justify-content: center;
+    background: rgba(255,255,255,0.85);
+    margin: 0 auto 18px auto;
+    border-radius: 999px;
+    padding: 8px 12px;
+    width: calc(100% - 80px);
+    max-width: 85%;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    backdrop-filter: blur(6px);
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nav-item {
+}
+
+.nav-link {
+    display: inline-block;
+    padding: 8px 14px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 999px;
+    transition: all 0.25s ease;
+}
+
+.nav-link:hover {
+    background: rgba(52,152,219,0.08);
+    color: var(--secondary-color);
+}
+
+.nav-link.active {
+    background: var(--secondary-color);
+    color: white;
+    box-shadow: 0 6px 14px rgba(52,152,219,0.2);
+}
+
+@media (max-width: 720px) {
+    .nav-bar {
+        top: 8px;
+        width: calc(100% - 30px);
+    }
+    .nav-link {
+        padding: 7px 10px;
+        font-size: 0.9em;
+    }
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,64 Q300,20 600,64 T1200,64 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+    background-repeat: repeat-x;
+    animation: wave 15s linear infinite;
+}
+
+@keyframes wave {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(1200px);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid white;
+    object-fit: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeInScale 0.8s ease-out;
+}
+
+.header-info {
+    text-align: left;
+}
+
+.name {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.title {
+    font-size: 1.3em;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* ============================================
+   Sections
+   ============================================ */
+
+.section {
+    padding: 50px;
+    border-bottom: 1px solid var(--light-bg);
+}
+
+.section:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--secondary-color);
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-title i {
+    color: var(--secondary-color);
+    font-size: 1.5em;
+}
+
+.section-content {
+    font-size: 1.05em;
+    color: var(--light-text);
+    line-height: 1.8;
+}
+
+/* ============================================
+   Personal Information Grid
+   ============================================ */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.info-item .label {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-item .label i {
+    color: var(--secondary-color);
+}
+
+.info-item .value {
+    color: var(--light-text);
+    font-size: 0.95em;
+}
+
+/* ============================================
+   Experience Items
+   ============================================ */
+
+.experience-item {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--light-bg);
+}
+
+.experience-item:last-child {
+    border-bottom: none;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.job-title {
+    font-size: 1.3em;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.date {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.company {
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 1em;
+    margin-bottom: 8px;
+}
+
+.description {
+    color: var(--light-text);
+    line-height: 1.7;
+}
+
+/* ============================================
+   Course Items
+   ============================================ */
+
+.course-item {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--light-bg);
+}
+
+.course-item:last-child {
+    border-bottom: none;
+}
+
+.course-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.course-title {
+    font-size: 1.2em;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.institution {
+    color: var(--secondary-color);
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+/* ============================================
+   Skills Grid
+   ============================================ */
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.skill-box {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(230, 126, 34, 0.1) 100%);
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid var(--light-bg);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.skill-box:hover {
+    border-color: var(--secondary-color);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+    transform: translateY(-8px) scale(1.02);
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.15) 0%, rgba(230, 126, 34, 0.15) 100%);
+}
+
+.skill-box h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.skill-box p {
+    color: var(--light-text);
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+/* ============================================
+   Training Items
+   ============================================ */
+
+.training-item {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--light-bg);
+}
+
+.training-item:last-child {
+    border-bottom: none;
+}
+
+.training-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.training-header h3 {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+/* ============================================
+   Languages Grid
+   ============================================ */
+
+.languages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.language-item {
+    background-color: var(--light-bg);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.language-item:hover {
+    border-color: var(--secondary-color);
+    background-color: white;
+}
+
+.language-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.proficiency {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* ============================================
+   Hobbies List
+   ============================================ */
+
+.hobbies-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.hobbies-list li {
+    background-color: var(--light-bg);
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.hobbies-list li:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: translateX(5px);
+}
+
+.hobbies-list li i {
+    font-size: 1.3em;
+    color: var(--secondary-color);
+}
+
+.hobbies-list li:hover i {
+    color: white;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+
+.footer {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+    .container {
+        border-radius: 0;
+        margin: 0;
+        box-shadow: none;
+    }
+
+    body {
+        padding: 10px;
+    }
+
+    .header {
+        padding: 25px 15px;
+    }
+
+    .profile-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .header-info {
+        text-align: center;
+    }
+
+    .name {
+        font-size: 1.8em;
+    }
+
+    .title {
+        font-size: 1em;
+    }
+
+    .profile-pic {
+        width: 120px;
+        height: 120px;
+    }
+
+    .section {
+        padding: 25px 15px;
+    }
+
+    .section-title {
+        font-size: 1.4em;
+    }
+
+    .experience-header,
+    .course-header,
+    .training-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .date {
+        width: 100%;
+        text-align: center;
+    }
+
+    .info-grid,
+    .skills-grid,
+    .languages-grid,
+    .hobbies-list {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .name {
+        font-size: 1.5em;
+    }
+
+    .section-title {
+        font-size: 1.2em;
+    }
+
+    .job-title,
+    .course-title {
+        font-size: 1.1em;
+    }
+
+    .section {
+        padding: 15px;
+    }
+}
+
+/* ============================================
+   Smooth Scroll & Transitions
+   ============================================ */
+
+html {
+    scroll-behavior: smooth;
+}
+
+a {
+    transition: color 0.3s ease;
+}
+
+/* ============================================
+   Back to Top Button
+   ============================================ */
+
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.back-to-top:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(52, 152, 219, 0.6);
+}
+
+.back-to-top.show {
+    display: flex;
+}
+
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .container {
+        box-shadow: none;
+        max-width: 100%;
+    }
+
+    .section {
+        page-break-inside: avoid;
+    }
+}
