@@ -1,25 +1,92 @@
 {% load static %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>App2</title>
-        <meta name="description" content="">
+        <title>Image Gallery - App2</title>
+        <meta name="description" content="Discover amazing images">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="{% static 'app2/style.css' %}">
     </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <h1> 
-            this is second app 
-        </h1>
-        <script src="" async defer></script>
+        <div class="navbar">
+            <h1 class="logo">📸 Image Gallery</h1>
+            <div class="stats">
+                <span>Total Likes: <strong id="totalLikes">0</strong></span>
+            </div>
+        </div>
+        
+        <div class="gallery">
+            <div class="image-card">
+                <img src="{% static 'istockphoto-958936628-1024x1024.jpg' %}" alt="Image 1">
+                <div class="card-footer">
+                    <button class="like-btn" onclick="toggleLike(this)">
+                        <i class="far fa-thumbs-up"></i> <span class="like-count">0</span>
+                    </button>
+                    <button class="dislike-btn" onclick="toggleDislike(this)">
+                        <i class="far fa-thumbs-down"></i> <span class="dislike-count">0</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="image-card">
+                <img src="{% static 'keegan-houser--Q_t4SCN8c4-unsplash.jpg' %}" alt="Image 2">
+                <div class="card-footer">
+                    <button class="like-btn" onclick="toggleLike(this)">
+                        <i class="far fa-thumbs-up"></i> <span class="like-count">0</span>
+                    </button>
+                    <button class="dislike-btn" onclick="toggleDislike(this)">
+                        <i class="far fa-thumbs-down"></i> <span class="dislike-count">0</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="image-card">
+                <img src="{% static 'zhangzui-Pf23Y30hD68-unsplash.jpg' %}" alt="Image 3">
+                <div class="card-footer">
+                    <button class="like-btn" onclick="toggleLike(this)">
+                        <i class="far fa-thumbs-up"></i> <span class="like-count">0</span>
+                    </button>
+                    <button class="dislike-btn" onclick="toggleDislike(this)">
+                        <i class="far fa-thumbs-down"></i> <span class="dislike-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 Image Gallery App 2 | Showcasing Beautiful Images</p>
+                <div class="footer-icons">
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-images"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </footer>
+        
+        <script>
+            function toggleLike(btn) {
+                const isActive = btn.classList.toggle('active');
+                const likeCount = btn.querySelector('.like-count');
+                let count = parseInt(likeCount.textContent);
+                likeCount.textContent = isActive ? count + 1 : count - 1;
+                updateTotalLikes();
+            }
+            
+            function toggleDislike(btn) {
+                const isActive = btn.classList.toggle('active');
+                const dislikeCount = btn.querySelector('.dislike-count');
+                let count = parseInt(dislikeCount.textContent);
+                dislikeCount.textContent = isActive ? count + 1 : count - 1;
+            }
+            
+            function updateTotalLikes() {
+                const allLikeButtons = document.querySelectorAll('.like-btn.active');
+                document.getElementById('totalLikes').textContent = allLikeButtons.length;
+            }
+        </script>
     </body>
 </html>

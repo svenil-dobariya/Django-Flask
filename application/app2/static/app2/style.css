@@ -1,0 +1,357 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    min-height: 100vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 25px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid #f5576c;
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.logo {
+    color: #f5576c;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    text-shadow: 0 4px 8px rgba(245, 87, 108, 0.3);
+}
+
+.stats {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.gallery {
+    column-count: 3;
+    column-gap: 25px;
+    padding: 50px 40px;
+    max-width: 1600px;
+    margin: 0 auto;
+    flex-grow: 1;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.image-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    position: relative;
+    animation: cardFadeIn 0.6s ease-out backwards;
+    margin-bottom: 25px;
+    break-inside: avoid;
+    cursor: pointer;
+}
+
+.image-card:nth-child(1) { animation-delay: 0s; }
+.image-card:nth-child(2) { animation-delay: 0.1s; }
+.image-card:nth-child(3) { animation-delay: 0.2s; }
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.image-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    z-index: 10;
+}
+
+.image-card:hover::before {
+    transform: scaleX(1);
+}
+
+.image-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.image-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    animation: imageZoomIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.image-card:nth-child(1) img { animation-delay: 0.1s; }
+.image-card:nth-child(2) img { animation-delay: 0.2s; }
+.image-card:nth-child(3) img { animation-delay: 0.3s; }
+
+@keyframes imageZoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.card-footer {
+    padding: 25px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    border-top: 2px solid #e0e0e0;
+}
+
+.like-btn,
+.dislike-btn {
+    flex: 1;
+    padding: 14px 24px;
+    border: 2px solid #ddd;
+    background: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.like-btn::before,
+.dislike-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.like-btn:active::before,
+.dislike-btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.like-btn {
+    color: #666;
+}
+
+.like-btn:hover {
+    border-color: #4CAF50;
+    color: #4CAF50;
+    background: rgba(76, 175, 80, 0.05);
+    transform: scale(1.05);
+}
+
+.like-btn.active {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    border-color: #4CAF50;
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.dislike-btn {
+    color: #666;
+}
+
+.dislike-btn:hover {
+    border-color: #f44336;
+    color: #f44336;
+    background: rgba(244, 67, 54, 0.05);
+    transform: scale(1.05);
+}
+
+.dislike-btn.active {
+    background: linear-gradient(135deg, #f44336 0%, #da190b 100%);
+    color: white;
+    border-color: #f44336;
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+}
+
+.footer {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: auto;
+    border-top: 3px solid #f5576c;
+    animation: slideUp 0.6s ease-out 0.4s both;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-content p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.footer-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 1.5rem;
+}
+
+.footer-icons i {
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+}
+
+.footer-icons i:nth-child(1) { animation-delay: 0s; }
+.footer-icons i:nth-child(2) { animation-delay: 0.3s; }
+.footer-icons i:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.footer-icons i:hover {
+    color: #f5576c;
+    transform: scale(1.2);
+}
+
+@media (max-width: 1200px) {
+    .gallery {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    .gallery {
+        column-count: 1;
+        gap: 25px;
+        padding: 30px 20px;
+    }
+    
+    .footer {
+        padding: 30px 20px;
+    }
+    
+    .footer-icons {
+        gap: 15px;
+        font-size: 1.2rem;
+    }
+}
