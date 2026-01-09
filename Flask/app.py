@@ -1,4 +1,4 @@
-from flask import Flask, render_template , request
+from flask import Flask, render_template , request, jsonify
                                                           
 app = Flask(__name__)
 
@@ -30,12 +30,18 @@ def Login():
         return f"<h1>Email: {email}, Password: {password}</h1>"
     return render_template('login.html')
 
-@app.route('/calculator', methods = ['GET','POST'])
+@app.route('/calculator', methods = ['GET'])
 def calculator():
-    if request.method == 'POST':
-        num1 = float(request.form['num1'])
-        num2 = float(request.form['num2'])
-        operation = request.form['operation']
+    return render_template('calculator.html')
+
+@app.route('/api/calculator', methods=['POST'])
+def api_calculator():
+    data = request.get_json()
+    num1 = float(data.get('num1'))
+    num2 = float(data.get('num2'))
+    operation = data.get('operation')
+    
+    try:
         if operation == 'add':
             result = num1 + num2
         elif operation == 'subtract':
@@ -43,8 +49,14 @@ def calculator():
         elif operation == 'multiply':
             result = num1 * num2
         elif operation == 'divide':
-            result = num1 / num2 if num2 != 0 else "Error: Division by zero"
-        return f"<h1>Result: {result}</h1>"
-    return render_template('calculator.html')
+            if num2 == 0:
+                return jsonify({'error': 'Error: Division by zero'})
+            result = num1 / num2
+        else:
+            return jsonify({'error': 'Invalid operation'})
+        
+        return jsonify({'result': result})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 app.run()

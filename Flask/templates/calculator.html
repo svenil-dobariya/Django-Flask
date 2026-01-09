@@ -6,182 +6,66 @@
         <title>Calculator</title>
         <meta name="description" content="Simple calculator application">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-            
-            body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                min-height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            
-            .calculator-container {
-                background: white;
-                padding: 40px;
-                border-radius: 10px;
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-                width: 100%;
-                max-width: 450px;
-            }
-            
-            h1 {
-                text-align: center;
-                color: #333;
-                margin-bottom: 30px;
-                font-size: 28px;
-            }
-            
-            .form-group {
-                margin-bottom: 20px;
-            }
-            
-            label {
-                display: block;
-                margin-bottom: 8px;
-                color: #555;
-                font-weight: 500;
-            }
-            
-            input, select {
-                width: 100%;
-                padding: 12px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                font-size: 14px;
-                transition: border-color 0.3s;
-                font-family: inherit;
-            }
-            
-            input:focus, select:focus {
-                outline: none;
-                border-color: #667eea;
-                box-shadow: 0 0 5px rgba(102, 126, 234, 0.1);
-            }
-            
-            .operation-group {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
-                margin-bottom: 20px;
-            }
-            
-            .operation-group label {
-                margin-bottom: 0;
-            }
-            
-            .operation-group input[type="radio"] {
-                width: auto;
-                margin-right: 8px;
-                cursor: pointer;
-            }
-            
-            .operation-option {
-                display: flex;
-                align-items: center;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.2s;
-            }
-            
-            .operation-option:hover {
-                background-color: #f5f5f5;
-            }
-            
-            .operation-option input[type="radio"]:checked + span {
-                color: #667eea;
-                font-weight: 600;
-            }
-            
-            button {
-                width: 100%;
-                padding: 12px;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                border: none;
-                border-radius: 5px;
-                font-size: 16px;
-                font-weight: 600;
-                cursor: pointer;
-                transition: transform 0.2s, box-shadow 0.2s;
-            }
-            
-            button:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            }
-            
-            button:active {
-                transform: translateY(0);
-            }
-            
-            .back-link {
-                text-align: center;
-                margin-top: 20px;
-            }
-            
-            .back-link a {
-                color: #667eea;
-                text-decoration: none;
-                font-weight: 600;
-                transition: color 0.3s;
-            }
-            
-            .back-link a:hover {
-                color: #764ba2;
-            }
-        </style>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     </head>
     <body>
-        <div class="calculator-container">
-            <h1>Calculator</h1>
-            <form method="POST" action="/calculator">
-                <div class="form-group">
-                    <label for="num1">First Number</label>
-                    <input type="number" id="num1" name="num1" required step="any" placeholder="Enter first number">
-                </div>
-                
-                <div class="form-group">
-                    <label for="num2">Second Number</label>
-                    <input type="number" id="num2" name="num2" required step="any" placeholder="Enter second number">
-                </div>
-                
-                <fieldset>
-                    <legend style="margin-bottom: 15px; color: #555; font-weight: 500;">Operation</legend>
-                    <div class="operation-group">
-                        <label class="operation-option">
-                            <input type="radio" name="operation" value="add" required>
-                            <span>Add</span>
-                        </label>
-                        <label class="operation-option">
-                            <input type="radio" name="operation" value="subtract">
-                            <span>Subtract</span>
-                        </label>
-                        <label class="operation-option">
-                            <input type="radio" name="operation" value="multiply">
-                            <span>Multiply</span>
-                        </label>
-                        <label class="operation-option">
-                            <input type="radio" name="operation" value="divide">
-                            <span>Divide</span>
-                        </label>
+        <div class="main-wrapper">
+            <div class="calculator-container">
+                <h1>Calculator</h1>
+                <form id="calculatorForm">
+                    <div class="form-group">
+                        <label for="num1">First Number</label>
+                        <input type="number" id="num1" name="num1" required step="any" placeholder="Enter first number">
                     </div>
-                </fieldset>
+                    
+                    <div class="form-group">
+                        <label for="num2">Second Number</label>
+                        <input type="number" id="num2" name="num2" required step="any" placeholder="Enter second number">
+                    </div>
+                    
+                    <fieldset>
+                        <legend style="margin-bottom: 15px; color: #555; font-weight: 500;">Operation</legend>
+                        <div class="operation-group">
+                            <label class="operation-option">
+                                <input type="radio" name="operation" value="add" required>
+                                <span>Add</span>
+                            </label>
+                            <label class="operation-option">
+                                <input type="radio" name="operation" value="subtract">
+                                <span>Subtract</span>
+                            </label>
+                            <label class="operation-option">
+                                <input type="radio" name="operation" value="multiply">
+                                <span>Multiply</span>
+                            </label>
+                            <label class="operation-option">
+                                <input type="radio" name="operation" value="divide">
+                                <span>Divide</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                    
+                    <button type="submit">Calculate</button>
+                </form>
+
+                <div id="errorMessage" class="error-message"></div>
                 
-                <button type="submit">Calculate</button>
-            </form>
-            
-            <div class="back-link">
-                <a href="/">Back to Home</a>
+                <div id="resultContainer" class="result-container">
+                    <div class="result-label">Result:</div>
+                    <div id="resultValue" class="result-value"></div>
+                </div>
+                
+                <div class="back-link">
+                    <a href="/">Back to Home</a>
+                </div>
+            </div>
+            <div class="canvas-container">
+                <canvas id="canvas3d"></canvas>
             </div>
         </div>
+
+       
+        <script src="{{ url_for('static', filename='js/index.js') }}"></script>
     </body>
 </html>
